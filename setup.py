@@ -31,6 +31,8 @@ setup(
             "pytest-cov",
             "flake8",
             "mockito",
+            "tox",
+            "nose2",
         ],
         "all": [
             "Django",

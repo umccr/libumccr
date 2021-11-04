@@ -7,10 +7,11 @@ logger = logging.getLogger(__name__)
 
 
 def load_package_if_found(name):
+    spec = importlib_util.find_spec(name)
     if name in sys.modules:
         logger.debug(f"{name!r} already in sys.modules")
         return True
-    elif (spec := importlib_util.find_spec(name)) is not None:
+    elif spec is not None:
         module = importlib_util.module_from_spec(spec)
         sys.modules[name] = module
         spec.loader.exec_module(module)

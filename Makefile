@@ -4,11 +4,28 @@ install:
 all:
 	@pip install '.[test,dev,all]'
 
-unit:
+pytest:
 	@py.test --no-cov tests/
 
 test:
 	@py.test
+
+unit:
+	@python -m unittest
+
+tox:
+	@tox -vv
+
+nose:
+	@nose2 -vv
+
+coverage:
+	@coverage run --source=libumccr -m pytest tests/
+
+.PHONY: local
+local:
+	@py.test --cov-report html:local/coverage --cov=libumccr tests/
+	@py.test --cov-report xml:local/coverage.xml --cov=libumccr tests/
 
 clean:
 	@rm -rf build/

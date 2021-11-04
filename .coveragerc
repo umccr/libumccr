@@ -1,0 +1,6 @@
+[run]
+source = libumccr
+omit = */test/test*,*tests*
+
+[report]
+omit = */test/test*,*tests*
