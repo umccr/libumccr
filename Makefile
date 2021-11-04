@@ -10,8 +10,12 @@ unit:
 test:
 	@py.test
 
+clean:
+	@rm -rf build/
+	@rm -rf libumccr.egg-info/
+
 .PHONY: dist
-dist:
+dist: clean
 	@python setup.py sdist bdist_wheel
 
 # Usage: make testpypi version=0.2.0

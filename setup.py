@@ -16,7 +16,7 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/umccr/libumccr",
     license="MIT",
-    packages=find_packages(exclude=("tests", "docs")),
+    packages=find_packages(exclude=("tests**", "docs")),
     extras_require={
         "dev": [
             "pipdeptree",
