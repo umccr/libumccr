@@ -1,4 +1,5 @@
 import logging
+from datetime import datetime
 from unittest import TestCase
 
 from libumccr import libjson
@@ -29,6 +30,19 @@ class LibJsonUnitTests(TestCase):
         result = libjson.loads(json_bytes)
         logger.info(result)
         self.assertIsInstance(result, list)
+
+    def test_dumps_fallback(self):
+        """
+        python -m unittest tests.test_libjson.LibJsonUnitTests.test_dumps_fallback
+        """
+        result = libjson.dumps({
+            'date': datetime.now(),
+            'id': 1,
+            'name': "Some string",
+            'bool': True,
+        })
+        logger.info(result)
+        self.assertIsInstance(result, str)
 
 
 class LibJsonIntegrationTests(TestCase):
