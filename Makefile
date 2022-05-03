@@ -33,11 +33,13 @@ clean:
 
 .PHONY: dist
 dist: clean
-	@python setup.py sdist bdist_wheel
+	@python3 -m build
 
 # Usage: make testpypi version=0.2.0
 testpypi: dist/libumccr-$(version).tar.gz
-	@twine upload --repository testpypi --sign dist/libumccr-$(version)*
+	@python3 -m twine upload --repository testpypi --sign dist/libumccr-$(version).*
+	@python3 -m twine upload --repository testpypi --sign dist/libumccr-$(version)-*
 
 pypi: dist/libumccr-$(version).tar.gz
-	@twine upload --sign dist/libumccr-$(version)*
+	@python3 -m twine upload --sign dist/libumccr-$(version).*
+	@python3 -m twine upload --sign dist/libumccr-$(version)-*

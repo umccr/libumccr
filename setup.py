@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 from setuptools import setup, find_packages
 
-from libumccr import __version__
-
-with open("README.md", "r") as f:
+with open("README.md", "r", encoding="utf-8") as f:
     long_description = f.read()
+
+# Note:
+#   Version scheme follow PEP440 https://peps.python.org/pep-0440/
+#   _NOT_ SemVer https://semver.org
 
 setup(
     name="libumccr",
-    version=__version__,
+    version="0.2.dev1",
     author="UMCCR and Contributors",
     author_email="services@umccr.org",
     description="UMCCR Reusable Python modules",
@@ -17,13 +19,22 @@ setup(
     url="https://github.com/umccr/libumccr",
     license="MIT",
     packages=find_packages(exclude=("tests**", "docs")),
+    project_urls={
+        "Bug Tracker": "https://github.com/umccr/libumccr/issues",
+    },
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+    ],
+    python_requires=">=3.6",
     extras_require={
         "dev": [
             "pipdeptree",
-            "sphinx",
             "twine",
             "setuptools",
             "wheel",
+            "build",
             "pdoc3",
         ],
         "test": [
@@ -48,5 +59,4 @@ setup(
         "gspread-pandas",
         "google-auth",
     ],
-    python_requires=">=3.6",
 )
