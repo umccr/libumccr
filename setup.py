@@ -36,6 +36,8 @@ setup(
             "wheel",
             "build",
             "pdoc3",
+            "pre-commit",
+            "detect-secrets",
         ],
         "test": [
             "pytest",

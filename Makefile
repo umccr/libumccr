@@ -1,8 +1,13 @@
 install:
 	@pip install '.[test,dev]'
+	@pre-commit install
 
 all:
 	@pip install '.[test,dev,all]'
+	@pre-commit install
+
+check:
+	@pre-commit run --all-files
 
 pytest:
 	@py.test --no-cov tests/

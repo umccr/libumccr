@@ -16,9 +16,9 @@ class LibSmIntegrationTests(TestCase):
         python -m unittest tests.aws.test_libsm.LibSmIntegrationTests.test_get_secret
         """
 
-        secret_name = "IcaSecretsPortal"
+        lookup_name = "IcaSecretsPortal"
 
-        secret = libsm.get_secret(secret_name=secret_name)
+        secret = libsm.get_secret(secret_name=lookup_name)
 
         self.assertIsNotNone(secret)
         self.assertIsInstance(secret, str)
