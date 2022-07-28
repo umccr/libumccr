@@ -38,3 +38,7 @@ def ssm_client(**kwargs):
 
 def sm_client(**kwargs):
     return client('secretsmanager', **kwargs)
+
+
+def lambda_client(**kwargs):
+    return client('lambda', **kwargs)

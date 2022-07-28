@@ -1,5 +1,16 @@
 import copy
 import json
+from enum import Enum
+
+
+class LambdaInvocationType(Enum):
+    """
+    REF: Supported Lambda Event Types
+    https://docs.aws.amazon.com/lambda/latest/dg/API_Invoke.html#API_Invoke_RequestSyntax
+    """
+    EVENT = 'Event'
+    REQUEST_RESPONSE = 'RequestResponse'
+    DRY_RUN = 'DryRun'
 
 
 def transpose_fn_url_event(event: dict):
