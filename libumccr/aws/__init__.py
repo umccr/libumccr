@@ -42,3 +42,15 @@ def sm_client(**kwargs):
 
 def lambda_client(**kwargs):
     return client('lambda', **kwargs)
+
+
+def stepfn_client(**kwargs):
+    return client('stepfunctions', **kwargs)
+
+
+def srv_discovery_client(**kwargs):
+    return client('servicediscovery', **kwargs)
+
+
+def athena_client(**kwargs):
+    return client('athena', **kwargs)
