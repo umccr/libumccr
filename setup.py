@@ -10,7 +10,7 @@ with open("README.md", "r", encoding="utf-8") as f:
 
 setup(
     name="libumccr",
-    version="0.2.0",
+    version="0.3.0",
     author="UMCCR and Contributors",
     author_email="services@umccr.org",
     description="UMCCR Reusable Python modules",
