@@ -10,7 +10,7 @@ with open("README.md", "r", encoding="utf-8") as f:
 
 setup(
     name="libumccr",
-    version="0.3.0",
+    version="0.4.0rc1",
     author="UMCCR and Contributors",
     author_email="services@umccr.org",
     description="UMCCR Reusable Python modules",
@@ -23,6 +23,7 @@ setup(
         "Bug Tracker": "https://github.com/umccr/libumccr/issues",
     },
     classifiers=[
+        "Development Status :: 5 - Production/Stable",
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
