@@ -15,8 +15,13 @@ logger = logging.getLogger(__name__)
 @lru_cache(maxsize=64)
 def get_secret(key) -> str:
     """
-    Retrieve the secret value from SSM.
-    :param key: the key of the secret
+    Retrieve the secret value from SSM
+
+    You can clear the cache before get secret call. e.g.
+
+        libumccr.aws.libssm.get_secret.cache_clear()
+
+    :param key: key of secret
     :return: the secret value
     """
     resp = ssm_client().get_parameter(
