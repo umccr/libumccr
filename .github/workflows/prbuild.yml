@@ -6,7 +6,7 @@ on:
       - main
 
 # Actions Used (please keep this documented here as added)
-#  https://github.com/actions/setup-python#usage
+#  https://github.com/marketplace/actions/setup-python
 #  https://github.com/marketplace/actions/trufflehog-oss
 #  https://github.com/marketplace/actions/cache
 
@@ -58,7 +58,7 @@ jobs:
           docker-compose -f docker-compose.yml up -d
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
 
