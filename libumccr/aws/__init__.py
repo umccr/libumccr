@@ -54,3 +54,7 @@ def srv_discovery_client(**kwargs):
 
 def athena_client(**kwargs):
     return client('athena', **kwargs)
+
+
+def eb_client(**kwargs):
+    return client('events', **kwargs)
