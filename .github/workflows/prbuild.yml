@@ -8,6 +8,7 @@ on:
 # Actions Used (please keep this documented here as added)
 #  https://github.com/actions/setup-python#usage
 #  https://github.com/marketplace/actions/trufflehog-oss
+#  https://github.com/marketplace/actions/cache
 
 jobs:
   build:
@@ -33,6 +34,24 @@ jobs:
           base: ${{ github.event.repository.default_branch }}
           head: HEAD
           extra_args: --debug --only-verified
+
+      - name: Restore Localstack Image Cache if it exists
+        id: cache-docker-localstack
+        uses: actions/cache@v3
+        with:
+          path: ci/cache/docker/localstack
+          key: cache-docker-localstack-2.1
+
+      - name: Update Localstack Image Cache if cache miss
+        if: steps.cache-docker-localstack.outputs.cache-hit != 'true'
+        run: docker pull public.ecr.aws/localstack/localstack:2.1 && mkdir -p ci/cache/docker/localstack && docker image save public.ecr.aws/localstack/localstack:2.1 --output ./ci/cache/docker/localstack/localstack-2.1.tar
+
+      - name: Use Localstack Image Cache if cache hit
+        if: steps.cache-docker-localstack.outputs.cache-hit == 'true'
+        run: docker image load --input ./ci/cache/docker/localstack/localstack-2.1.tar
+
+      - name: Start containers
+        run: docker compose up -d
 
       - name: Set up compose stack
         run: |

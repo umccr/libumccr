@@ -1,3 +1,4 @@
+# NOTE: if we update the container image version in here, also do update GHA caches step in prbuild.yml
 version: '3.1'
 
 services:
