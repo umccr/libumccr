@@ -34,6 +34,10 @@ jobs:
           head: HEAD
           extra_args: --debug --only-verified
 
+      - name: Set up compose stack
+        run: |
+          docker-compose -f docker-compose.yml up -d
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v1
         with:
@@ -50,3 +54,7 @@ jobs:
       - name: Run test suite
         run: |
           make test
+
+      - name: Tear down compose stack
+        run: |
+          docker-compose -f docker-compose.yml down

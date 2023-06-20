@@ -38,6 +38,8 @@ for obj in libs3.get_matching_s3_objects(bucket, prefix=key_prefix, suffix=key_s
 git clone https://github.com/umccr/libumccr.git
 cd libumccr
 conda activate libumccr
+make up
+make ps
 make install all
 make check
 make test

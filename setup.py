@@ -47,6 +47,7 @@ setup(
             "mockito",
             "tox",
             "nose2",
+            "awscli-local",
         ],
         "all": [
             "Django",
