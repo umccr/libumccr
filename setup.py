@@ -10,7 +10,7 @@ with open("README.md", "r", encoding="utf-8") as f:
 
 setup(
     name="libumccr",
-    version="0.4.0rc2",
+    version="0.4.0rc3",
     author="UMCCR and Contributors",
     author_email="services@umccr.org",
     description="UMCCR Reusable Python modules",
@@ -48,6 +48,7 @@ setup(
             "tox",
             "nose2",
             "awscli-local",
+            "cachetools",
         ],
         "libgdrive": [
             "requests",
@@ -55,6 +56,7 @@ setup(
             "gspread",
             "gspread-pandas",
             "google-auth",
+            "cachetools",
         ],
         "aws": [
             "boto3",
