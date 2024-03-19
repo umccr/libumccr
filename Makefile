@@ -63,9 +63,9 @@ dist: clean
 
 # Usage: make testpypi version=0.2.0
 testpypi: dist/libumccr-$(version).tar.gz
-	@python3 -m twine upload --repository testpypi --sign dist/libumccr-$(version).*
-	@python3 -m twine upload --repository testpypi --sign dist/libumccr-$(version)-*
+	@python3 -m twine upload --repository testpypi --sign dist/libumccr-$(version).tar.gz
+	@python3 -m twine upload --repository testpypi --sign dist/libumccr-$(version)-*.whl
 
 pypi: dist/libumccr-$(version).tar.gz
-	@python3 -m twine upload --sign dist/libumccr-$(version).*
-	@python3 -m twine upload --sign dist/libumccr-$(version)-*
+	@python3 -m twine upload --sign dist/libumccr-$(version).tar.gz
+	@python3 -m twine upload --sign dist/libumccr-$(version)-*.whl
