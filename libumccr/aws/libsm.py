@@ -6,11 +6,23 @@ Module interface with AWS Secrets Manager and, LRU cache for hit less to AWS end
 import base64
 import logging
 
-from cachetools.func import lru_cache
-
 from libumccr.aws import sm_client
+from libumccr.utils import load_package_if_found
 
 logger = logging.getLogger(__name__)
+
+if load_package_if_found("cachetools"):
+    logger.info(f"cachetools found, using LRU cache")
+    from cachetools.func import lru_cache
+else:
+    def lru_cache(maxsize):
+        logger.info(f"cachetools not found, skipping LRU cache with maxsize={maxsize}")
+
+        def wrapper(func):
+            func.cache_clear = lambda: None
+            return func
+
+        return wrapper
 
 
 @lru_cache(maxsize=64)

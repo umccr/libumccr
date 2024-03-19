@@ -1,5 +1,5 @@
 # NOTE: if we update the container image version in here, also do update GHA caches step in prbuild.yml
-version: '3.1'
+version: '3.8'
 
 services:
 
@@ -8,3 +8,7 @@ services:
     container_name: libumccr_localstack
     ports:
       - "4566:4566"
+    volumes:
+      - "./init-aws.sh:/etc/localstack/init/ready.d/init-aws.sh"
+    environment:
+      - DEBUG=1
