@@ -10,7 +10,7 @@ with open("README.md", "r", encoding="utf-8") as f:
 
 setup(
     name="libumccr",
-    version="0.4.0rc1",
+    version="0.4.0rc2",
     author="UMCCR and Contributors",
     author_email="services@umccr.org",
     description="UMCCR Reusable Python modules",
@@ -49,18 +49,31 @@ setup(
             "nose2",
             "awscli-local",
         ],
+        "libgdrive": [
+            "requests",
+            "pandas",
+            "gspread",
+            "gspread-pandas",
+            "google-auth",
+        ],
+        "aws": [
+            "boto3",
+            "botocore",
+            "cachetools",
+        ],
         "all": [
             "Django",
+            "boto3",
+            "botocore",
+            "cachetools",
+            "requests",
+            "pandas",
+            "gspread",
+            "gspread-pandas",
+            "google-auth",
         ],
     },
     install_requires=[
-        "boto3",
-        "botocore",
-        "cachetools",
-        "requests",
-        "pandas",
-        "gspread",
-        "gspread-pandas",
-        "google-auth",
+        # silent night
     ],
 )
