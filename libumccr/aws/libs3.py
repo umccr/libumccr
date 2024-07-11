@@ -111,7 +111,7 @@ def bucket_exists(bucket) -> bool:
     return False
 
 
-def presign_s3_file(bucket: str, key: str, content_disposition='inline') -> (bool, str):
+def presign_s3_file(bucket: str, key: str, content_disposition:str ='inline') -> (bool, str):
     """
     Generate a presigned URL
     https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html#S3.Client.generate_presigned_url
