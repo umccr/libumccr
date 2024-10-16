@@ -33,25 +33,6 @@ jobs:
         with:
           extra_args: --only-verified
 
-      - name: Restore Localstack Image Cache if it exists
-        id: cache-docker-localstack
-        uses: actions/cache@v4
-        with:
-          path: ci/cache/docker/localstack
-          key: cache-docker-localstack-3.8
-
-      - name: Update Localstack Image Cache if cache miss
-        if: steps.cache-docker-localstack.outputs.cache-hit != 'true'
-        run: docker pull public.ecr.aws/localstack/localstack:3.8 && mkdir -p ci/cache/docker/localstack && docker image save public.ecr.aws/localstack/localstack:3.8 --output ./ci/cache/docker/localstack/localstack-3.8.tar
-
-      - name: Use Localstack Image Cache if cache hit
-        if: steps.cache-docker-localstack.outputs.cache-hit == 'true'
-        run: docker image load --input ./ci/cache/docker/localstack/localstack-3.8.tar
-
-      - name: Set up compose stack
-        run: |
-          docker compose -f compose.yml up -d
-
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
@@ -68,7 +49,3 @@ jobs:
       - name: Run test suite
         run: |
           make test
-
-      - name: Tear down compose stack
-        run: |
-          docker compose -f compose.yml down

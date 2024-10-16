@@ -1,9 +1,10 @@
 import logging
 import sys
-import uuid
 from unittest import TestCase, skip
 from unittest.mock import patch
 
+import boto3
+from botocore.stub import Stubber
 from mockito import when
 
 from libumccr import aws
@@ -15,16 +16,13 @@ class LibSsmUnitTests(TestCase):
 
     def setUp(self):
         from libumccr.aws import libssm
-        mock_ssm = aws.client(
-            'ssm',
-            endpoint_url='http://localhost:4566',
-            region_name='ap-southeast-2',
-            aws_access_key_id=str(uuid.uuid4()),
-            aws_secret_access_key=str(uuid.uuid4()),
-            aws_session_token=f"{uuid.uuid4()}_{uuid.uuid4()}"
-        )
-        when(aws).ssm_client(...).thenReturn(mock_ssm)
-        when(libssm).ssm_client(...).thenReturn(mock_ssm)
+        mock_ssm_client = boto3.client('ssm')
+        stubber = Stubber(mock_ssm_client)
+        stubber.add_response('get_parameter', {'Parameter': {'Value': 'Sello'}})
+        stubber.activate()
+        when(aws).ssm_client(...).thenReturn(mock_ssm_client)
+        when(libssm).ssm_client(...).thenReturn(mock_ssm_client)
+        super(LibSsmUnitTests, self).setUp()
 
     def test_cache_clear(self):
         """
@@ -83,7 +81,7 @@ class LibSsmUnitTests(TestCase):
         from libumccr.aws import libssm
         value = libssm.get_ssm_param(name='my-param')
         logger.info(value)
-        self.assertEqual(value, 'Hello')
+        self.assertEqual(value, 'Sello')
 
 
 class LibSsmIntegrationTests(TestCase):

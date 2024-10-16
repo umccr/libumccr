@@ -1,10 +1,23 @@
 from datetime import datetime
 
+import boto3
+from botocore.stub import Stubber
+from libumccr import aws
+from mockito import when
+
 from libumccr.aws import libeb
 from tests.aws import AWSTestCase, logger
 
 
 class LibEBUnitTests(AWSTestCase):
+
+    def setUp(self):
+        super(LibEBUnitTests, self).setUp()
+        mock_eb_client = boto3.client('events')
+        self.stubber = Stubber(mock_eb_client)
+        self.stubber.activate()
+        when(aws).eb_client(...).thenReturn(mock_eb_client)
+        when(libeb).eb_client(...).thenReturn(mock_eb_client)
 
     def test_eb_client(self):
         """
@@ -19,6 +32,20 @@ class LibEBUnitTests(AWSTestCase):
         """
         python -m unittest tests.aws.test_libeb.LibEBUnitTests.test_get_event_buses
         """
+        self.stubber.add_response('list_event_buses', {
+            'EventBuses': [
+                {
+                    'Name': 'string',
+                    'Arn': 'string',
+                    'Description': 'string',
+                    'Policy': 'string',
+                    'CreationTime': datetime(2015, 1, 1),
+                    'LastModifiedTime': datetime(2015, 1, 1)
+                },
+            ],
+            'NextToken': 'string'
+        })
+
         resp = libeb.get_event_buses()
         logger.info(resp)
         self.assertIsNotNone(resp)
@@ -27,18 +54,16 @@ class LibEBUnitTests(AWSTestCase):
         """
         python -m unittest tests.aws.test_libeb.LibEBUnitTests.test_emit_events
         """
-        # when(BaseClient)._make_api_call(...).thenReturn(
-        #     {
-        #         "FailedEntryCount": 123,
-        #         "Entries": [
-        #             {
-        #                 "EventId": "string",
-        #                 "ErrorCode": "string",
-        #                 "ErrorMessage": "string"
-        #             },
-        #         ]
-        #     }
-        # )
+        self.stubber.add_response('put_events', {
+            'FailedEntryCount': 123,
+            'Entries': [
+                {
+                    'EventId': 'string',
+                    'ErrorCode': 'string',
+                    'ErrorMessage': 'string'
+                },
+            ]
+        })
 
         resp = libeb.emit_events([
             {
@@ -61,6 +86,17 @@ class LibEBUnitTests(AWSTestCase):
         """
         python -m unittest tests.aws.test_libeb.LibEBUnitTests.test_emit_event
         """
+        self.stubber.add_response('put_events', {
+            'FailedEntryCount': 123,
+            'Entries': [
+                {
+                    'EventId': 'string',
+                    'ErrorCode': 'string',
+                    'ErrorMessage': 'string'
+                },
+            ]
+        })
+
         resp = libeb.emit_event(
             {
                 "Time": datetime(2015, 1, 1),
@@ -82,6 +118,27 @@ class LibEBUnitTests(AWSTestCase):
         """
         python -m unittest tests.aws.test_libeb.LibEBUnitTests.test_dispatch_events
         """
+        self.stubber.add_response('put_events', {
+            'FailedEntryCount': 123,
+            'Entries': [
+                {
+                    'EventId': 'string',
+                    'ErrorCode': 'string',
+                    'ErrorMessage': 'string'
+                },
+            ]
+        })
+        self.stubber.add_response('put_events', {
+            'FailedEntryCount': 123,
+            'Entries': [
+                {
+                    'EventId': 'string',
+                    'ErrorCode': 'string',
+                    'ErrorMessage': 'string'
+                },
+            ]
+        })
+
         mock_entries = []
         for n in range(20):
             mock_entries.append(

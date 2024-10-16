@@ -1,9 +1,10 @@
 import logging
 import sys
-import uuid
 from unittest import TestCase, skip
 from unittest.mock import patch
 
+import boto3
+from botocore.stub import Stubber
 from mockito import when
 
 from libumccr import aws
@@ -15,16 +16,14 @@ class LibSmUnitTests(TestCase):
 
     def setUp(self):
         from libumccr.aws import libsm
-        mock_sm = aws.client(
-            'secretsmanager',
-            endpoint_url='http://localhost:4566',
-            region_name='ap-southeast-2',
-            aws_access_key_id=str(uuid.uuid4()),
-            aws_secret_access_key=str(uuid.uuid4()),
-            aws_session_token=f"{uuid.uuid4()}_{uuid.uuid4()}"
-        )
-        when(aws).sm_client(...).thenReturn(mock_sm)
-        when(libsm).sm_client(...).thenReturn(mock_sm)
+        mock_sm_client = boto3.client('secretsmanager')
+        stubber = Stubber(mock_sm_client)
+        stubber.add_response('get_secret_value', {
+            'SecretString': 'HealTheWorld',  # pragma: allowlist secret
+        })
+        stubber.activate()
+        when(aws).sm_client(...).thenReturn(mock_sm_client)
+        when(libsm).sm_client(...).thenReturn(mock_sm_client)
 
     def test_cache_clear(self):
         """

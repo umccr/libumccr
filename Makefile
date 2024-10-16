@@ -18,18 +18,6 @@ deep: scan
 baseline:
 	@detect-secrets scan --exclude-files '^(yarn.lock|.yarn/|.local/|openapi/)' > .secrets.baseline
 
-up:
-	@docker compose up -d
-
-down:
-	@docker compose down
-
-stop:
-	@docker compose down
-
-ps:
-	@docker compose ps
-
 pytest:
 	@py.test --no-cov tests/
 

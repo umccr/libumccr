@@ -64,8 +64,6 @@ _This arrangement is sometime also known as deferring feature flag toggle at run
 git clone https://github.com/umccr/libumccr.git
 cd libumccr
 conda activate libumccr
-make up
-make ps
 make install all
 make check
 make test
