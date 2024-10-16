@@ -1,10 +1,6 @@
-# NOTE: if we update the container image version in here, also do update GHA caches step in prbuild.yml
-version: '3.8'
-
 services:
-
   localstack:
-    image: public.ecr.aws/localstack/localstack:2.1
+    image: public.ecr.aws/localstack/localstack:3.8
     container_name: libumccr_localstack
     ports:
       - "4566:4566"
