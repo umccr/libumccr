@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 
 
 def get_utc_now_ts():
-    return int(datetime.utcnow().replace(tzinfo=timezone.utc).timestamp())
+    return int(datetime.now(timezone.utc).replace(tzinfo=timezone.utc).timestamp())
 
 
 def parse_last_modified_date(date_raw: str) -> datetime:
