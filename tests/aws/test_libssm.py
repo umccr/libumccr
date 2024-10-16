@@ -16,7 +16,7 @@ class LibSsmUnitTests(TestCase):
 
     def setUp(self):
         from libumccr.aws import libssm
-        mock_ssm_client = boto3.client('ssm')
+        mock_ssm_client = boto3.client('ssm', region_name='us-east-1')
         stubber = Stubber(mock_ssm_client)
         stubber.add_response('get_parameter', {'Parameter': {'Value': 'Sello'}})
         stubber.activate()

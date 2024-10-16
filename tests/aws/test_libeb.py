@@ -13,7 +13,7 @@ class LibEBUnitTests(AWSTestCase):
 
     def setUp(self):
         super(LibEBUnitTests, self).setUp()
-        mock_eb_client = boto3.client('events')
+        mock_eb_client = boto3.client('events', region_name='us-east-1')
         self.stubber = Stubber(mock_eb_client)
         self.stubber.activate()
         when(aws).eb_client(...).thenReturn(mock_eb_client)

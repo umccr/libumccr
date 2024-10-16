@@ -16,7 +16,7 @@ class LibSmUnitTests(TestCase):
 
     def setUp(self):
         from libumccr.aws import libsm
-        mock_sm_client = boto3.client('secretsmanager')
+        mock_sm_client = boto3.client('secretsmanager', region_name='us-east-1')
         stubber = Stubber(mock_sm_client)
         stubber.add_response('get_secret_value', {
             'SecretString': 'HealTheWorld',  # pragma: allowlist secret
