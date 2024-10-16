@@ -12,11 +12,11 @@ from libumccr.utils import load_package_if_found
 logger = logging.getLogger(__name__)
 
 if load_package_if_found("cachetools"):
-    logger.info(f"cachetools found, using LRU cache")
+    logger.debug(f"cachetools found, using LRU cache")
     from cachetools.func import lru_cache
 else:
     def lru_cache(maxsize):
-        logger.info(f"cachetools not found, skipping LRU cache with maxsize={maxsize}")
+        logger.debug(f"cachetools not found, skipping LRU cache with maxsize={maxsize}")
 
         def wrapper(func):
             func.cache_clear = lambda: None
