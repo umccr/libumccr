@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [ '3.7', '3.8', '3.9', '3.10', '3.11', '3.12' ]
+        python-version: [ '3.9', '3.10', '3.11', '3.12', '3.13' ]
 
     steps:
       - name: Checkout code
@@ -29,31 +29,28 @@ jobs:
           fetch-depth: 0
 
       - name: TruffleHog OSS
-        uses: trufflesecurity/trufflehog@v3.70.2
+        uses: trufflesecurity/trufflehog@v3.82.9
         with:
-          path: ./
-          base: ${{ github.event.repository.default_branch }}
-          head: HEAD
-          extra_args: --debug --only-verified
+          extra_args: --only-verified
 
       - name: Restore Localstack Image Cache if it exists
         id: cache-docker-localstack
         uses: actions/cache@v4
         with:
           path: ci/cache/docker/localstack
-          key: cache-docker-localstack-2.1
+          key: cache-docker-localstack-3.8
 
       - name: Update Localstack Image Cache if cache miss
         if: steps.cache-docker-localstack.outputs.cache-hit != 'true'
-        run: docker pull public.ecr.aws/localstack/localstack:2.1 && mkdir -p ci/cache/docker/localstack && docker image save public.ecr.aws/localstack/localstack:2.1 --output ./ci/cache/docker/localstack/localstack-2.1.tar
+        run: docker pull public.ecr.aws/localstack/localstack:3.8 && mkdir -p ci/cache/docker/localstack && docker image save public.ecr.aws/localstack/localstack:3.8 --output ./ci/cache/docker/localstack/localstack-3.8.tar
 
       - name: Use Localstack Image Cache if cache hit
         if: steps.cache-docker-localstack.outputs.cache-hit == 'true'
-        run: docker image load --input ./ci/cache/docker/localstack/localstack-2.1.tar
+        run: docker image load --input ./ci/cache/docker/localstack/localstack-3.8.tar
 
       - name: Set up compose stack
         run: |
-          docker-compose -f docker-compose.yml up -d
+          docker compose -f compose.yml up -d
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
@@ -74,4 +71,4 @@ jobs:
 
       - name: Tear down compose stack
         run: |
-          docker-compose -f docker-compose.yml down
+          docker compose -f compose.yml down
