@@ -49,3 +49,50 @@ SAMPLE_REGEX_OBJS = {
     # https://regex101.com/r/nNPwQu/1
     "year": re.compile(LIBRARY_REGEX_STR["year"])
 }
+
+
+"""
+OrcaBus regexes
+"""
+
+# https://github.com/ulid/spec
+ULID_REGEX_STR = r"[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{26}"
+ULID_REGEX_OBJ = re.compile(ULID_REGEX_STR)
+
+ORCABUS_ID_WM_PREFIXES = {
+    "analysis": r"ana\.",
+    "analysis_run": r"anr\.",
+    "analysis_context": r"ctx\.",
+    "state": r"stt\.",
+    "payload": r"pld\.",
+    "workflow": r"wfl\.",
+    "workflow_run": r"wfr\."
+}
+
+ORCABUS_ID_WM_REGEX_OBJS = {
+    "analysis": re.compile("({})?{}".format(ORCABUS_ID_WM_PREFIXES["analysis"], ULID_REGEX_STR)),
+    "analysis_run": re.compile("({})?{}".format(ORCABUS_ID_WM_PREFIXES["analysis_run"], ULID_REGEX_STR)),
+    "analysis_context": re.compile("({})?{}".format(ORCABUS_ID_WM_PREFIXES["analysis_context"], ULID_REGEX_STR)),
+    "state": re.compile("({})?{}".format(ORCABUS_ID_WM_PREFIXES["state"], ULID_REGEX_STR)),
+    "payload": re.compile("({})?{}".format(ORCABUS_ID_WM_PREFIXES["payload"], ULID_REGEX_STR)),
+    "workflow": re.compile("({})?{}".format(ORCABUS_ID_WM_PREFIXES["workflow"], ULID_REGEX_STR)),
+    "workflow_run": re.compile("({})?{}".format(ORCABUS_ID_WM_PREFIXES["workflow_run"], ULID_REGEX_STR))
+}
+
+ORCABUS_ID_MM_PREFIXES = {
+    "contact": r"ctc\.",
+    "individual": r"idv\.",
+    "library": r"lib\.",
+    "project": r"prj\.",
+    "sample": r"smp\.",
+    "subject": r"sbj\."
+}
+
+ORCABUS_ID_MM_REGEX_OBJS = {
+    "contact": re.compile("({})?{}".format(ORCABUS_ID_MM_PREFIXES["contact"], ULID_REGEX_STR)),
+    "individual": re.compile("({})?{}".format(ORCABUS_ID_MM_PREFIXES["individual"], ULID_REGEX_STR)),
+    "library": re.compile("({})?{}".format(ORCABUS_ID_MM_PREFIXES["library"], ULID_REGEX_STR)),
+    "project": re.compile("({})?{}".format(ORCABUS_ID_MM_PREFIXES["project"], ULID_REGEX_STR)),
+    "sample": re.compile("({})?{}".format(ORCABUS_ID_MM_PREFIXES["sample"], ULID_REGEX_STR)),
+    "subject": re.compile("({})?{}".format(ORCABUS_ID_MM_PREFIXES["subject"], ULID_REGEX_STR))
+}
