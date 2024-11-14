@@ -111,7 +111,7 @@ def bucket_exists(bucket) -> bool:
     return False
 
 
-def presign_s3_file(bucket: str, key: str, content_disposition:str ='inline') -> (bool, str):
+def presign_s3_file(bucket: str, key: str, content_disposition: str = 'inline', expires_in: int = 3600) -> (bool, str):
     """
     Generate a presigned URL
     https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html#S3.Client.generate_presigned_url
@@ -119,10 +119,20 @@ def presign_s3_file(bucket: str, key: str, content_disposition:str ='inline') ->
 
     :param bucket:
     :param key:
+    :param content_disposition:
+    :param expires_in: seconds:
+
     :return tuple (bool, str): (true, signed_url) if success, otherwise (false, error message)
     """
     try:
-        return True, s3_client().generate_presigned_url('get_object', Params={'Bucket': bucket, 'Key': key, 'ResponseContentDisposition': content_disposition})
+        return True, s3_client(). \
+            generate_presigned_url('get_object',
+                                   Params={
+                                       'Bucket': bucket,
+                                       'Key': key,
+                                       'ResponseContentDisposition': content_disposition
+                                   },
+                                   ExpiresIn=expires_in)
     except ClientError as e:
         message = f"Failed to sign the specified S3 object (s3://{bucket}/{key}). Exception - {e}"
         logger.error(message)
